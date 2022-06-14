@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d648dcca123e4866d0bb025e10e1b4d",
+    "content-hash": "49253e0c0a87a6b46f021957e1072866",
     "packages": [
         {
             "name": "datadog/dd-trace",
@@ -2825,7 +2825,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
