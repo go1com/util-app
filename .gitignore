@@ -1,5 +1,7 @@
+config.php
 vendor/
+db.sqlite
 .idea/
-.DS_Store
 .phpunit.result.cache
-composer.lock
+.phpunit.cache
+auth.json

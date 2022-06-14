@@ -119,8 +119,7 @@ class Neo4jDataCollector extends DataCollector
                 $idx = $this->nbQueries++;
                 $this->statements[$idx]['start_time'] = null;
                 $this->statementsHash[$idx] = $idx;
-            }
-            else {
+            } else {
                 $idx = $this->statementsHash[$statementText][$encodedParameters][$tag];
             }
 
