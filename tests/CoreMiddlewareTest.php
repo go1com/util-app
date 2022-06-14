@@ -1,4 +1,5 @@
 <?php
+
 namespace go1\app\tests;
 
 use go1\app\providers\CoreMiddlewareProvider;
@@ -18,20 +19,26 @@ class CoreMiddlewareTest extends TestCase
 
         $appMock
             ->method('error')
-            ->withConsecutive([$this->callback(function ($val) {
+            ->withConsecutive([
+                $this->callback(function ($val) {
                     $notFoundException = new NotFoundHttpException('foo');
                     $response = $val($notFoundException);
                     $this->assertInstanceOf(JsonResponse::class, $response);
                     $this->assertEquals($notFoundException->getStatusCode(), $response->getStatusCode());
+
                     return true;
-                })],
-                [$this->callback(function ($val) {
-                    $e = new \Exception('foo');
-                    $response = $val($e);
-                    $this->assertInstanceOf(JsonResponse::class, $response);
-                    $this->assertEquals(500, $response->getStatusCode());
-                    return true;
-                })]
+                }),
+            ],
+                [
+                    $this->callback(function ($val) {
+                        $e = new \Exception('foo');
+                        $response = $val($e);
+                        $this->assertInstanceOf(JsonResponse::class, $response);
+                        $this->assertEquals(500, $response->getStatusCode());
+
+                        return true;
+                    }),
+                ]
             );
 
         $testSubject->boot($appMock);

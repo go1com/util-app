@@ -165,13 +165,13 @@ class CoreServiceProvider implements ServiceProviderInterface
             $masterDsn .= http_build_query($connectionOptions);
 
             $hosts = [$masterDsn];
-            if (isset($c['cacheOptions']['replication'])) {               
+            if (isset($c['cacheOptions']['replication'])) {
                 $replicationDsn = $c['cacheOptions']['replication']['dsn'];
                 if ($replicationDsn) {
                     $replicationDsn .= parse_url($replicationDsn, PHP_URL_QUERY) ? '&' : '?';
                     $replicationDsn .= http_build_query($connectionOptions);
-                }       
-                $masterDsn .= '&alias=master';                
+                }
+                $masterDsn .= '&alias=master';
                 $hosts = [$masterDsn, $replicationDsn];
                 $options += ['replication' => true];
             }
@@ -183,7 +183,6 @@ class CoreServiceProvider implements ServiceProviderInterface
             if (isset($c['cacheOptions']['parameters'])) {
                 $options += ['parameters' => $c['cacheOptions']['parameters']];
             }
-
 
             return [$hosts, $options];
         };
@@ -301,7 +300,8 @@ class CoreServiceProvider implements ServiceProviderInterface
                 new class implements ServiceProviderInterface, EventListenerProviderInterface {
                     public function subscribe(Container $c, EventDispatcherInterface $dispatcher)
                     {
-                        $dispatcher->addSubscriber(new ProfilerListener($c['profiler'], $c['request_stack'], null, false, false));
+                        $dispatcher->addSubscriber(new ProfilerListener($c['profiler'], $c['request_stack'], null,
+                            false, false));
                         $dispatcher->addSubscriber($c['profiler']->get('request'));
                     }
 
@@ -315,7 +315,6 @@ class CoreServiceProvider implements ServiceProviderInterface
 
     private function registerClientService(Container $c)
     {
-
         $c['client.middleware.profiler'] = function () {
             return new GuzzleHistory(new Stopwatch);
         };

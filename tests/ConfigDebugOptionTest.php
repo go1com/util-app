@@ -13,9 +13,10 @@ class ConfigDebugOptionTest extends TestCase
     /**
      * This method is called before the first test of this test class is run.
      */
-    public static function setUpBeforeClass() : void
+    public static function setUpBeforeClass(): void
     {
-        self::$phpServer = proc_open('exec php -S 127.0.0.1:4455 -t tests/fixtures/error-documentroot &> /dev/null', [], $pipes = []);
+        $arr = $pipes = [];
+        self::$phpServer = proc_open('exec php -S 127.0.0.1:4455 -t tests/fixtures/error-documentroot &> /dev/null', [], $arr);
         if (self::$phpServer !== false) {
             usleep(100 * 1000);
         }
@@ -24,14 +25,14 @@ class ConfigDebugOptionTest extends TestCase
     /**
      * This method is called after the last test of this test class is run.
      */
-    public static function tearDownAfterClass() : void
+    public static function tearDownAfterClass(): void
     {
         if (self::$phpServer !== false) {
             proc_terminate(self::$phpServer, 9);
         }
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->assertNotFalse(self::$phpServer);
     }
@@ -45,7 +46,6 @@ class ConfigDebugOptionTest extends TestCase
 
     public function testItReturns500DebugOnException()
     {
-
         $fd = @fopen('http://127.0.0.1:4455/exception', 'r');
         $this->assertFalse($fd, 'Request was expected to fail');
         $this->assertEquals('HTTP/1.0 500 Internal Server Error', $http_response_header[0]);
@@ -61,5 +61,4 @@ class ConfigDebugOptionTest extends TestCase
         $res = $app->handle($req);
         $this->assertEquals(405, $res->getStatusCode());
     }
-
 }

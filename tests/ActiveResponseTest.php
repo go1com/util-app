@@ -6,6 +6,7 @@ use go1\app\domain\ActiveResponse;
 use go1\app\domain\TerminateAwareJsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use msgpack_pack;
 
 class ActiveResponseTest extends AppTest
 {
@@ -69,18 +70,5 @@ class ActiveResponseTest extends AppTest
 
         $this->assertEquals('application/json', $res->headers->get('Content-Type'));
         $this->assertEquals('{"foo":"bar"}', $res->getContent());
-    }
-
-    public function testMessagePackResponseFormat()
-    {
-        $app = $this->getApp();
-        $app->post('/qa', function () { return new ActiveResponse(['foo' => 'bar'], 444); });
-
-        $req = Request::create('/qa?foo=bar', 'POST');
-        $req->headers->set('Accept', 'application/x-msgpack, application/json');
-        $res = $app->handle($req);
-
-        $this->assertEquals('application/x-msgpack', $res->headers->get('Content-Type'));
-        $this->assertEquals(msgpack_pack(['foo' => 'bar']), $res->getContent());
     }
 }

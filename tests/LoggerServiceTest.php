@@ -53,9 +53,13 @@ class LoggerServiceTest extends TestCase
     {
         $app = new App([
             'routes' => [
-                ['GET', '/', function () {
-                    throw new DBALException('foo message');
-                }],
+                [
+                    'GET',
+                    '/',
+                    function () {
+                        throw new DBALException('foo message');
+                    },
+                ],
             ],
         ]);
 
@@ -83,15 +87,13 @@ class LoggerServiceTest extends TestCase
         $app = new App(['logOptions' => ['name' => 'qa']]);
 
         $app->extend('logger', function () use (&$logger) {
-            return $logger = new class extends NullLogger
-            {
+            return $logger = new class extends NullLogger {
                 public $log = [];
 
                 public function log($level, $message, array $context = [])
                 {
                     $this->log[$level][] = $message;
                 }
-
             };
         });
 
