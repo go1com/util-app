@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92eae809af00f55907bda05f749fe3cc",
+    "content-hash": "b47d60e4588b8319f8c59f8c0553201a",
     "packages": [
         {
             "name": "datadog/dd-trace",
-            "version": "0.74.0",
+            "version": "0.78.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataDog/dd-trace-php.git",
-                "reference": "7e112e49def21fc1342fb6c04a1b685d4586863b"
+                "reference": "8ffb855d7fbec16c233d99a63ed5a9d2e4eb87e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataDog/dd-trace-php/zipball/7e112e49def21fc1342fb6c04a1b685d4586863b",
-                "reference": "7e112e49def21fc1342fb6c04a1b685d4586863b",
+                "url": "https://api.github.com/repos/DataDog/dd-trace-php/zipball/8ffb855d7fbec16c233d99a63ed5a9d2e4eb87e9",
+                "reference": "8ffb855d7fbec16c233d99a63ed5a9d2e4eb87e9",
                 "shasum": ""
             },
             "require": {
@@ -96,9 +96,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DataDog/dd-trace-php/issues",
-                "source": "https://github.com/DataDog/dd-trace-php/tree/0.74.0"
+                "source": "https://github.com/DataDog/dd-trace-php/tree/0.78.0"
             },
-            "time": "2022-05-11T13:46:53+00:00"
+            "time": "2022-08-24T10:39:30+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2828,5 +2828,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.1.0"
 }
