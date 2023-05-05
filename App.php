@@ -20,7 +20,7 @@ use Throwable;
 
 class App extends Application
 {
-    const NAME = 'go1';
+    public const NAME = 'go1';
 
     private $timerStart;
 
@@ -84,7 +84,7 @@ class App extends Application
 
         parent::__construct($values);
 
-        $this->register(new CoreServiceProvider);
+        $this->register(new CoreServiceProvider());
         $this->providers[] = $this['middleware.core'];
         $this->providers[] = $this['middleware.jwt'];
 
@@ -136,7 +136,7 @@ class App extends Application
         if ($this['debug']) {
             return;
         }
-        
+
         /** @var LoggerInterface $logger */
         $logger = $this['logger'];
 

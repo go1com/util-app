@@ -19,7 +19,8 @@ class CoreMiddlewareTest extends TestCase
 
         $appMock
             ->method('error')
-            ->withConsecutive([
+            ->withConsecutive(
+                [
                 $this->callback(function ($val) {
                     $notFoundException = new NotFoundHttpException('foo');
                     $response = $val($notFoundException);

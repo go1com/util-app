@@ -50,6 +50,7 @@ use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\Stopwatch\Stopwatch;
+
 use function substr;
 
 class CoreServiceProvider implements ServiceProviderInterface
@@ -57,11 +58,11 @@ class CoreServiceProvider implements ServiceProviderInterface
     public function register(Container $c)
     {
         // Clean routing. Documentation: http://silex.sensiolabs.org/doc/providers/service_controller.html
-        $c->register(new ServiceControllerServiceProvider);
+        $c->register(new ServiceControllerServiceProvider());
 
         // Auto register doctrine DBAL service provider if the app needs it. Documentation: http://silex.sensiolabs.org/doc/providers/doctrine.html
-        $c->offsetExists('db.options') && $c->register(new DoctrineServiceProvider, ['db.options' => $c['db.options']]);
-        $c->offsetExists('dbs.options') && $c->register(new DoctrineServiceProvider, ['dbs.options' => $c['dbs.options']]);
+        $c->offsetExists('db.options') && $c->register(new DoctrineServiceProvider(), ['db.options' => $c['db.options']]);
+        $c->offsetExists('dbs.options') && $c->register(new DoctrineServiceProvider(), ['dbs.options' => $c['dbs.options']]);
 
         // Custom services
         $c->offsetExists('cacheOptions') && $this->registerCacheServices($c);
@@ -69,8 +70,12 @@ class CoreServiceProvider implements ServiceProviderInterface
         $c->offsetExists('clientOptions') && $this->registerClientService($c);
         $this->registerProfilerServices($c);
 
-        $c['middleware.jwt'] = function () { return new JwtMiddleware; };
-        $c['middleware.core'] = function () { return new CoreMiddlewareProvider; };
+        $c['middleware.jwt'] = function () {
+            return new JwtMiddleware();
+        };
+        $c['middleware.core'] = function () {
+            return new CoreMiddlewareProvider();
+        };
     }
 
     private function registerCacheServices(Container $c)
@@ -243,11 +248,11 @@ class CoreServiceProvider implements ServiceProviderInterface
         };
 
         $c['profiler.collectors.es'] = function () {
-            return new ElasticSearchDataCollector;
+            return new ElasticSearchDataCollector();
         };
 
         $c['profiler.collectors.mq'] = function () {
-            return new RabbitMqDataCollector;
+            return new RabbitMqDataCollector();
         };
 
         $c['stopwatch'] = function () {
@@ -256,17 +261,39 @@ class CoreServiceProvider implements ServiceProviderInterface
 
         $c['profiler.collectors'] = function () {
             return [
-                'config'    => function () { return new ConfigDataCollector('GO1', App::NAME . App::VERSION); },
-                'request'   => function () { return new RequestDataCollector; },
-                'exception' => function () { return new ExceptionDataCollector; },
-                'events'    => function ($c) { return new EventDataCollector($c['dispatcher']); },
-                'logger'    => function ($c) { return new LoggerDataCollector($c['logger']); },
-                'time'      => function ($c) { return new TimeDataCollector(null, $c['stopwatch']); },
-                'memory'    => function () { return new MemoryDataCollector; },
-                'guzzle'    => function ($c) { return $c['profiler.collectors.guzzle']; },
-                'db'        => function ($c) { return $c['profiler.collectors.db']; },
-                'es'        => function ($c) { return $c['profiler.collectors.es']; },
-                'mq'        => function ($c) { return $c['profiler.collectors.mq']; },
+                'config'    => function () {
+                    return new ConfigDataCollector('GO1', App::NAME . App::VERSION);
+                },
+                'request'   => function () {
+                    return new RequestDataCollector();
+                },
+                'exception' => function () {
+                    return new ExceptionDataCollector();
+                },
+                'events'    => function ($c) {
+                    return new EventDataCollector($c['dispatcher']);
+                },
+                'logger'    => function ($c) {
+                    return new LoggerDataCollector($c['logger']);
+                },
+                'time'      => function ($c) {
+                    return new TimeDataCollector(null, $c['stopwatch']);
+                },
+                'memory'    => function () {
+                    return new MemoryDataCollector();
+                },
+                'guzzle'    => function ($c) {
+                    return $c['profiler.collectors.guzzle'];
+                },
+                'db'        => function ($c) {
+                    return $c['profiler.collectors.db'];
+                },
+                'es'        => function ($c) {
+                    return $c['profiler.collectors.es'];
+                },
+                'mq'        => function ($c) {
+                    return $c['profiler.collectors.mq'];
+                },
             ];
         };
 
@@ -286,8 +313,8 @@ class CoreServiceProvider implements ServiceProviderInterface
             foreach ($c['dbs.options'] as $name => $params) {
                 /** @var Connection $db */
                 $db = $c['dbs'][$name];
-                $loggerChain = new LoggerChain;
-                $loggerChain->addLogger($logger = new DebugStack);
+                $loggerChain = new LoggerChain();
+                $loggerChain->addLogger($logger = new DebugStack());
                 $db->getConfiguration()->setSQLLogger($loggerChain);
                 $collector->addLogger($name, $logger);
             }
@@ -297,11 +324,18 @@ class CoreServiceProvider implements ServiceProviderInterface
             });
 
             $c->register(
-                new class implements ServiceProviderInterface, EventListenerProviderInterface {
+                new class () implements
+                    ServiceProviderInterface,
+                EventListenerProviderInterface {
                     public function subscribe(Container $c, EventDispatcherInterface $dispatcher)
                     {
-                        $dispatcher->addSubscriber(new ProfilerListener($c['profiler'], $c['request_stack'], null,
-                            false, false));
+                        $dispatcher->addSubscriber(new ProfilerListener(
+                            $c['profiler'],
+                            $c['request_stack'],
+                            null,
+                            false,
+                            false
+                        ));
                         $dispatcher->addSubscriber($c['profiler']->get('request'));
                     }
 
@@ -316,7 +350,7 @@ class CoreServiceProvider implements ServiceProviderInterface
     private function registerClientService(Container $c)
     {
         $c['client.middleware.profiler'] = function () {
-            return new GuzzleHistory(new Stopwatch);
+            return new GuzzleHistory(new Stopwatch());
         };
 
         $c['client'] = function (Container $c) {
@@ -334,7 +368,7 @@ class CoreServiceProvider implements ServiceProviderInterface
             $options['curl'][CURLOPT_DNS_SHUFFLE_ADDRESSES] = false;
             $options['curl'][CURLOPT_DNS_USE_GLOBAL_CACHE] = true;
 
-            $stack = HandlerStack::create(new CurlHandler);
+            $stack = HandlerStack::create(new CurlHandler());
             // Add user-defined header, mentioned in a.o. section 5 of RFC 2047. (https://tools.ietf.org/html/rfc2047#section-5)
             foreach ($_SERVER as $name => $value) {
                 if (substr($name, 0, 7) == 'HTTP_X_') {

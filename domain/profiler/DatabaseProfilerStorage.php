@@ -21,7 +21,8 @@ class DatabaseProfilerStorage implements ProfilerStorageInterface
     public function install()
     {
         DB::install(
-            $this->db, [
+            $this->db,
+            [
                 function (Schema $schema) {
                     if (!$schema->hasTable('profiler_items')) {
                         $table = $schema->createTable('profiler_items');
@@ -47,7 +48,7 @@ class DatabaseProfilerStorage implements ProfilerStorageInterface
         );
     }
 
-    public function find($ip, $url, $limit, $method, $start = null, $end = null) : array
+    public function find($ip, $url, $limit, $method, $start = null, $end = null): array
     {
         $q = $this
             ->db
@@ -73,7 +74,7 @@ class DatabaseProfilerStorage implements ProfilerStorageInterface
         return $rows ?? [];
     }
 
-    public function write(Profile $profile) : bool
+    public function write(Profile $profile): bool
     {
         $fields = [
             'token'       => $profile->getToken(),
@@ -102,7 +103,7 @@ class DatabaseProfilerStorage implements ProfilerStorageInterface
         $this->db->delete('profiler_items', []);
     }
 
-    public function read($token) : ?Profile
+    public function read($token): ?Profile
     {
         $items = $this->readMultiple([$token]);
 

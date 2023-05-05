@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DomainService extends GO1
 {
-    const NAME    = SERVICE_NAME;
-    const VERSION = SERVICE_VERSION;
+    public const NAME    = SERVICE_NAME;
+    public const VERSION = SERVICE_VERSION;
 
     public function __construct($values = [])
     {

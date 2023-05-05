@@ -20,7 +20,7 @@ class CacheServiceTest extends TestCase
 
     public function testNull()
     {
-        $app = new App;
+        $app = new App();
         $this->assertFalse($app->offsetExists('cache'));
     }
 
@@ -29,7 +29,7 @@ class CacheServiceTest extends TestCase
         $app = new App([
             'cacheOptions' => ['backend' => 'custom'],
             'cache.custom' => function () {
-                return new CustomCacheBackend;
+                return new CustomCacheBackend();
             },
         ]);
 

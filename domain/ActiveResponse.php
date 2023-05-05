@@ -55,7 +55,7 @@ class ActiveResponse extends Response
 
                         return $this;
                     }
-                    # No break;
+                    # no break;
 
                 case 'application/json':
                     $this->headers->set('Content-Type', $accept);

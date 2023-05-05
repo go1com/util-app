@@ -25,7 +25,7 @@ class DoctrineDataCollector extends DataCollector
      */
     private $dbs;
 
-    function __construct(array $dbs)
+    public function __construct(array $dbs)
     {
         $this->dbs = $dbs;
     }

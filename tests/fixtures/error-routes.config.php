@@ -4,7 +4,8 @@ return [
     'debug'  => true,
     'routes' => [
         ['GET', '/type-error', function () {
-            $typedFn = function(int $dummy) {};
+            $typedFn = function (int $dummy) {
+            };
             $typedFn(null);
         }],
         ['GET', '/exception', function () {
