@@ -20,7 +20,7 @@ use Throwable;
 
 class App extends Application
 {
-    const NAME = 'go1';
+    public const NAME = 'go1';
 
     private $timerStart;
 
@@ -84,7 +84,7 @@ class App extends Application
 
         parent::__construct($values);
 
-        $this->register(new CoreServiceProvider);
+        $this->register(new CoreServiceProvider());
         $this->providers[] = $this['middleware.core'];
         $this->providers[] = $this['middleware.jwt'];
 
@@ -133,6 +133,10 @@ class App extends Application
 
     public function onError(Exception $e)
     {
+        if ($this['debug']) {
+            return;
+        }
+
         /** @var LoggerInterface $logger */
         $logger = $this['logger'];
 
@@ -142,10 +146,6 @@ class App extends Application
 
         if ($e instanceof MethodNotAllowedException || $e instanceof NotFoundHttpException) {
             return new JsonResponse(['message' => $e->getMessage()], 404);
-        }
-
-        if ($this['debug']) {
-            throw $e;
         }
 
         $logger->error($e->getMessage());

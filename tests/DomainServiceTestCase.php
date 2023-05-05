@@ -30,9 +30,11 @@ abstract class DomainServiceTestCase extends TestCase
 
         // mocking
         if ($app->offsetExists('dbs')) {
-            $app->extend('dbs', function () { return $this->getDatabases(); });
+            $app->extend('dbs', function () {
+                return $this->getDatabases();
+            });
         }
-        
+
         $this->mockMqClient && $this->mockMqClient($app);
         $this->appInstall($app);
 

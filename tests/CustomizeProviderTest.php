@@ -14,14 +14,14 @@ class CustomizeProviderTest extends AppTest
     {
         $this->getApp();
 
-        $dummyProvider1 = new class() implements ServiceProviderInterface {
+        $dummyProvider1 = new class () implements ServiceProviderInterface {
             public function register(Container $pimple)
             {
                 $pimple['foo'] = 'bar';
             }
         };
 
-        $dummyProvider2 = new class() implements ServiceProviderInterface {
+        $dummyProvider2 = new class () implements ServiceProviderInterface {
             public function register(Container $pimple)
             {
                 $pimple['fizz'] = 'buzz';
