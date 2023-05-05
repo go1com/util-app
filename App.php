@@ -133,6 +133,10 @@ class App extends Application
 
     public function onError(Exception $e)
     {
+        if ($this['debug']) {
+            return;
+        }
+        
         /** @var LoggerInterface $logger */
         $logger = $this['logger'];
 
@@ -142,10 +146,6 @@ class App extends Application
 
         if ($e instanceof MethodNotAllowedException || $e instanceof NotFoundHttpException) {
             return new JsonResponse(['message' => $e->getMessage()], 404);
-        }
-
-        if ($this['debug']) {
-            throw $e;
         }
 
         $logger->error($e->getMessage());
