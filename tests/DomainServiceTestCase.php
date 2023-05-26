@@ -30,8 +30,8 @@ abstract class DomainServiceTestCase extends TestCase
 
         // mocking
         if ($app->offsetExists('dbs')) {
-            $app->extend('dbs', function () {
-                return $this->getDatabases();
+            $app->extend('dbs', function () use ($app) {
+                return $this->getDatabases($app);
             });
         }
 
@@ -47,7 +47,7 @@ abstract class DomainServiceTestCase extends TestCase
         UserSchema::createViews($app['dbs']['go1'], Service::accountsName('qa'));
     }
 
-    protected function getDatabases()
+    protected function getDatabases(DomainService $app)
     {
         return [
             'default' => $this->sqlite = DriverManager::getConnection(['url' => 'sqlite://sqlite::memory:']),
