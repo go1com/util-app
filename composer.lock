@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f86e759067141d827d18558e48c270bb",
+    "content-hash": "76681dd777813b5d0a8bed2c1d397b7e",
     "packages": [
         {
             "name": "datadog/dd-trace",
-            "version": "v0.79.0",
+            "version": "0.90.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataDog/dd-trace-php.git",
-                "reference": "77e083b943458707e9e464d0e957263caa43b089"
+                "reference": "ec17a97e981257d988a5dd09644ca1628784c3fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataDog/dd-trace-php/zipball/77e083b943458707e9e464d0e957263caa43b089",
-                "reference": "77e083b943458707e9e464d0e957263caa43b089",
+                "url": "https://api.github.com/repos/DataDog/dd-trace-php/zipball/ec17a97e981257d988a5dd09644ca1628784c3fb",
+                "reference": "ec17a97e981257d988a5dd09644ca1628784c3fb",
                 "shasum": ""
             },
             "require": {
@@ -29,7 +29,7 @@
                 "ext-posix": "*",
                 "g1a/composer-test-scenarios": "~3.0",
                 "mockery/mockery": "*",
-                "phpunit/phpunit": "*",
+                "phpunit/phpunit": "<10",
                 "squizlabs/php_codesniffer": "^3.3.0",
                 "symfony/process": "<5"
             },
@@ -67,7 +67,7 @@
             },
             "autoload": {
                 "files": [
-                    "./src/api/bootstrap.composer.php"
+                    "./src/api/ComposerBootstrap.php"
                 ],
                 "psr-4": {
                     "DDTrace\\": "./src/api/"
@@ -96,9 +96,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DataDog/dd-trace-php/issues",
-                "source": "https://github.com/DataDog/dd-trace-php/tree/v0.79.0"
+                "source": "https://github.com/DataDog/dd-trace-php/tree/0.90.0"
             },
-            "time": "2022-09-09T08:08:01+00:00"
+            "time": "2023-07-15T14:23:43+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2828,5 +2828,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
