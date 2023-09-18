@@ -10,11 +10,11 @@
   },
   "require": {
     "doctrine/dbal":      "2.12.1",
-    "go1/jwt-middleware": "^0.5",
     "silex/silex":        "^v2.3.0",
     "symfony/stopwatch":  "^3.2",
     "symfony/service-contracts": "^1.1",
-    "datadog/dd-trace": "^0.90.0"
+    "datadog/dd-trace": "^0.90.0",
+    "firebase/php-jwt": "^6.8"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^6.2",
