@@ -17,7 +17,6 @@ use go1\app\domain\profiler\ElasticSearchDataCollector;
 use go1\app\domain\profiler\GuzzleDataCollector;
 use go1\app\domain\profiler\GuzzleHistory;
 use go1\app\domain\profiler\RabbitMqDataCollector;
-use go1\jwt_middleware\JwtMiddleware;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -71,7 +70,7 @@ class CoreServiceProvider implements ServiceProviderInterface
         $this->registerProfilerServices($c);
 
         $c['middleware.jwt'] = function () {
-            return new JwtMiddleware();
+            return new JwtMiddlewareProvider();
         };
         $c['middleware.core'] = function () {
             return new CoreMiddlewareProvider();
