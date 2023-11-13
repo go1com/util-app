@@ -55,7 +55,7 @@ class App extends Application
         $debug = isset($values['debug']) ? $values['debug'] : false;
         $debug = class_exists('PHPUnit_Framework_MockObject_MockBuilder', false) ? true : $debug;
         $values['debug'] = $debug;
-        error_reporting($debug ? E_ALL : 0);
+        error_reporting($debug ? (E_ALL & ~E_DEPRECATED) : 0);
         ini_set('display_errors', $debug);
 
         if ($debug) { //No need to install it with display errors disabled
