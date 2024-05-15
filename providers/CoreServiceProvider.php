@@ -155,6 +155,7 @@ class CoreServiceProvider implements ServiceProviderInterface
                 return new PredisCache(new PredisClient($hosts, $options));
             } catch (\Exception $ex) {
                 // ignore if unable to connect to redis
+                return null;
             }
         };
 
