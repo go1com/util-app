@@ -62,8 +62,8 @@ class AppTest extends TestCase
             [$hosts, $options] = $app['cache.predis.options'];
 
             $this->assertEquals([
-                'tcp://master:6379?persistent=1&read_write_timeout=2&alias=master',
-                'tcp://replication:6379?persistent=1&read_write_timeout=2',
+                'tcp://master:6379?persistent=1&timeout=2&read_write_timeout=2&alias=master',
+                'tcp://replication:6379?persistent=1&timeout=2&read_write_timeout=2',
             ], $hosts);
             $this->assertEquals(['replication' => true, 'prefix' => 'local:SERVICE_NAME'], $options);
         }
@@ -83,8 +83,8 @@ class AppTest extends TestCase
             [$hosts, $options] = $app['cache.predis.options'];
 
             $this->assertEquals([
-                'tcp://master:6379?ssl[cafile]=private.pem&ssl[verify_peer]=1&persistent=1&read_write_timeout=2&alias=master',
-                'tcp://replication:6379?persistent=1&read_write_timeout=2',
+                'tcp://master:6379?ssl[cafile]=private.pem&ssl[verify_peer]=1&persistent=1&timeout=2&read_write_timeout=2&alias=master',
+                'tcp://replication:6379?persistent=1&timeout=2&read_write_timeout=2',
             ], $hosts);
             $this->assertEquals(['replication' => true, 'prefix' => 'local:SERVICE_NAME'], $options);
         }
