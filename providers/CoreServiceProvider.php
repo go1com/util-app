@@ -169,6 +169,9 @@ class CoreServiceProvider implements ServiceProviderInterface
             if (!isset($c['cacheOptions']['persistent']) || $c['cacheOptions']['persistent'] === true) {
                 $connectionOptions += ['persistent' => 1]; // if we add it as a query parameter, google says this should be 1 instead of true
             }
+            if (isset($c['cacheOptions']['async']) && $c['cacheOptions']['async'] === true) {
+                $connectionOptions += ['async' => true];
+            }
             $connectionOptions += ['timeout' => !isset($c['cacheOptions']['timeout']) ? 2 : $c['cacheOptions']['timeout']];
             $connectionOptions += ['read_write_timeout' => !isset($c['cacheOptions']['read_write_timeout']) ? 2 : $c['cacheOptions']['read_write_timeout']];
             $masterDsn .= parse_url($masterDsn, PHP_URL_QUERY) ? '&' : '?';
