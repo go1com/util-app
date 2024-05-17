@@ -149,10 +149,8 @@ class CoreServiceProvider implements ServiceProviderInterface
                 throw new RuntimeException('Missing caching driver.');
             }
 
-            [$hosts, $options] = $c['cache.predis.options'];
-
             try {
-                return new PredisCache(new PredisClient($hosts, $options));
+                return new PredisCache(new PredisClient($c['cache.predis.options']));
             } catch (\Exception $ex) {
                 // ignore if unable to connect to redis
                 return null;
@@ -160,44 +158,7 @@ class CoreServiceProvider implements ServiceProviderInterface
         };
 
         $c['cache.predis.options'] = function (Container $c) {
-            $options = [];
-
-            $masterDsn = $c['cacheOptions']['dsn'];
-
-            // add persistent and read_write_timeout connection options
-            $connectionOptions = [];
-            if (!isset($c['cacheOptions']['persistent']) || $c['cacheOptions']['persistent'] === true) {
-                $connectionOptions += ['persistent' => 1]; // if we add it as a query parameter, google says this should be 1 instead of true
-            }
-            if (isset($c['cacheOptions']['async']) && $c['cacheOptions']['async'] === true) {
-                $connectionOptions += ['async' => true];
-            }
-            $connectionOptions += ['timeout' => !isset($c['cacheOptions']['timeout']) ? 2 : $c['cacheOptions']['timeout']];
-            $connectionOptions += ['read_write_timeout' => !isset($c['cacheOptions']['read_write_timeout']) ? 2 : $c['cacheOptions']['read_write_timeout']];
-            $masterDsn .= parse_url($masterDsn, PHP_URL_QUERY) ? '&' : '?';
-            $masterDsn .= http_build_query($connectionOptions);
-
-            $hosts = [$masterDsn];
-            if (isset($c['cacheOptions']['replication'])) {
-                $replicationDsn = $c['cacheOptions']['replication']['dsn'];
-                if ($replicationDsn) {
-                    $replicationDsn .= parse_url($replicationDsn, PHP_URL_QUERY) ? '&' : '?';
-                    $replicationDsn .= http_build_query($connectionOptions);
-                }
-                $masterDsn .= '&alias=master';
-                $hosts = [$masterDsn, $replicationDsn];
-                $options += ['replication' => true];
-            }
-
-            if (isset($c['cacheOptions']['prefix'])) {
-                $options += ['prefix' => $c['cacheOptions']['prefix']];
-            }
-
-            if (isset($c['cacheOptions']['parameters'])) {
-                $options += ['parameters' => $c['cacheOptions']['parameters']];
-            }
-
-            return [$hosts, $options];
+            return $c['cacheOptions']['predis'];
         };
     }
 
