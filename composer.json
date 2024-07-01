@@ -9,17 +9,18 @@
     }
   },
   "require": {
-    "doctrine/dbal":      "2.12.1",
-    "silex/silex":        "^v2.3.0",
-    "symfony/stopwatch":  "^3.2",
+    "php": "^8.3",
+    "doctrine/dbal": "2.12.1",
+    "silex/silex": "^v2.3.0",
+    "symfony/stopwatch": "^3.4",
     "symfony/service-contracts": "^1.1",
     "datadog/dd-trace": "^0.90.0",
     "firebase/php-jwt": "^6.8"
   },
   "require-dev": {
-    "guzzlehttp/guzzle": "^6.2",
-    "monolog/monolog": "^1.19.0",
-    "doctrine/cache": "^1.11",
+    "guzzlehttp/guzzle": "^6.5",
+    "monolog/monolog": "^1.27.0",
+    "doctrine/cache": "^1.13",
     "phpunit/phpunit": "^9.6"
   }
 }

@@ -16,12 +16,12 @@ variables:
   XDEBUG_MODE: coverage
 
 test:phpunit:
-  image: go1com/ci-php:php7
+  image: registry.code.go1.com.au/domain-infrastructure/docker-images/ci-php:php8.3
   stage: test
   script:
     - composer config gitlab-token.code.go1.com.au $UTIL_GITLAB_TOKEN
     - composer install
-    - phpunit --colors=never --log-junit report.xml --coverage-text --coverage-cobertura=cobertura.xml
+    - ./vendor/bin/phpunit --colors=never --log-junit report.xml --coverage-text --coverage-cobertura=cobertura.xml
   coverage: /^\s*Lines:\s*\d+.\d+\%/
   artifacts:
     reports:
