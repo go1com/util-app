@@ -11,7 +11,7 @@ class MockConnection extends Connection
 {
     public static $logs;
 
-    public static $pdoConnectionClass = Driver\PDOConnection::class;
+    public static $pdoConnectionClass = Driver\Connection::class;
 
     public function __construct(array $params = [], Driver $driver = null)
     {
@@ -41,7 +41,7 @@ class MockConnection extends Connection
                     static::$logs['pdo'][] = $arguments;
 
                     $state = $stub
-                        ->getMockBuilder(Driver\PDOStatement::class)
+                        ->getMockBuilder(Driver\Statement::class)
                         ->setMethods(['execute', 'bindValue'])
                         ->disableOriginalConstructor()
                         ->getMock();

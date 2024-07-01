@@ -41,14 +41,14 @@ class ConfigDebugOptionTest extends TestCase
     {
         $fd = @fopen('http://127.0.0.1:4455/type-error', 'r');
         $this->assertFalse($fd, 'Request was expected to fail');
-        $this->assertEquals('HTTP/1.0 500 Internal Server Error', $http_response_header[0]);
+        $this->assertEquals('HTTP/1.1 500 Internal Server Error', $http_response_header[0]);
     }
 
     public function testItReturns500DebugOnException()
     {
         $fd = @fopen('http://127.0.0.1:4455/exception', 'r');
         $this->assertFalse($fd, 'Request was expected to fail');
-        $this->assertEquals('HTTP/1.0 500 Internal Server Error', $http_response_header[0]);
+        $this->assertEquals('HTTP/1.1 500 Internal Server Error', $http_response_header[0]);
     }
 
     public function testItReturns405DebugOnMethodNotAllowed()
