@@ -42,3 +42,6 @@ $app = new go1\App(['clientOptions' => $options]);
 // Access `client` service, instance of `GuzzleHttp\Client`
 $client = $app['client'];
 ```
+
+## How to test
+    ./vendor/bin/phpunit --stop-on-failure

@@ -19,6 +19,7 @@
   "require-dev": {
     "guzzlehttp/guzzle": "^6.2",
     "monolog/monolog": "^1.19.0",
-    "doctrine/cache": "^1.11"
+    "doctrine/cache": "^1.11",
+    "phpunit/phpunit": "^9.6"
   }
 }
