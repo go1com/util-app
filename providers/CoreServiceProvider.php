@@ -152,12 +152,15 @@ class CoreServiceProvider implements ServiceProviderInterface
             try {
                 return new PredisCache(new PredisClient($c['cache.predis.options']));
             } catch (\Exception $ex) {
-                // ignore if unable to connect to redis
-                return null;
+                throw new RuntimeException('Unable to connect to Redis: ' . $ex->getMessage(), 0, $ex);
             }
         };
 
         $c['cache.predis.options'] = function (Container $c) {
+            if (!isset($c['cacheOptions']['predis'])) {
+                throw new RuntimeException('Missing predis options.');
+            }
+
             return $c['cacheOptions']['predis'];
         };
     }
